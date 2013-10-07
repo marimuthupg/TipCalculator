@@ -10,14 +10,26 @@ import android.widget.TextView;
 
 public class TipActivity extends Activity {
 
-	SeekBar tipPercentControl = null;
+	/**
+	 * Slider control, avoids lookup.
+	 */
+	private SeekBar tipPercentControl = null;
+	
+	private TextView tipTV = null;
+	
+	private EditText amountET = null;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tip);
-        tipPercentControl = (SeekBar) findViewById(R.id.tipPerCentSeekBar);
         
+        //Get and cache controls 
+        tipPercentControl = (SeekBar) findViewById(R.id.tipPerCentSeekBar);
+        tipTV = (TextView) findViewById(R.id.tipValueTextView);
+        amountET = (EditText) findViewById(R.id.amountEditText);
+        
+        //Add Change listener for slider control
         tipPercentControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
         	int progressChanged = 0;
@@ -105,7 +117,7 @@ public class TipActivity extends Activity {
      * @return
      */
     public float getAmount(View v) {
-    	EditText amountET = (EditText) findViewById(R.id.amountEditText);
+    	
     	
     	float amount = 0;
     	
@@ -125,7 +137,8 @@ public class TipActivity extends Activity {
      * @param tip
      */
     public void updateTipValue(View v, float tip) {
-    	TextView tipTV = (TextView) findViewById(R.id.tipValueTextView);
-    	tipTV.setText(Float.toString(tip));
+    	if(tipTV !=null) {
+    		tipTV.setText(Float.toString(tip));
+    	}
     }
 }
