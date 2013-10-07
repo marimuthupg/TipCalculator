@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 public class TipActivity extends Activity {
 
+	SeekBar tipPercentControl = null;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tip);
-        SeekBar tipPercentControl = (SeekBar) findViewById(R.id.tipPerCentSeekBar);
+        tipPercentControl = (SeekBar) findViewById(R.id.tipPerCentSeekBar);
         
         tipPercentControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -24,6 +26,7 @@ public class TipActivity extends Activity {
                 progressChanged = progress;
             	TextView tipTV = (TextView) findViewById(R.id.tipPercentTextView);
             	tipTV.setText(Integer.toString(progressChanged)+"%");
+            	reconcileTip(seekBar,progressChanged);
             }
  
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -43,16 +46,31 @@ public class TipActivity extends Activity {
         getMenuInflater().inflate(R.menu.tip, menu);
         return true;
     }
-    
+
+    /**
+     * Listener for 10 % button, invoked on click of 10% button
+     * @param v
+     */
     public void on10PercentClick(View v) {
+    	tipPercentControl.setProgress(10);
     	reconcileTip(v,10);
     }
 
+    /**
+     * Listener for 15 % button, invoked on click of 15% button
+     * @param v
+     */
     public void on15PercentClick(View v) {
+    	tipPercentControl.setProgress(15);
     	reconcileTip(v,15);
     }
     
+    /**
+     * Listener for 20 % button, invoked on click of 20% button
+     * @param v
+     */
     public void on20PercentClick(View v) {
+    	tipPercentControl.setProgress(20);
     	reconcileTip(v,20);
     }
     
@@ -81,6 +99,11 @@ public class TipActivity extends Activity {
     	
     }
     
+    /**
+     * Gets amount from user input. 
+     * @param v
+     * @return
+     */
     public float getAmount(View v) {
     	EditText amountET = (EditText) findViewById(R.id.amountEditText);
     	
